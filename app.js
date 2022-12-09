@@ -1,26 +1,72 @@
 /* Creating Constants for our elements */
 const calculatorDisplay = document.querySelector('h1');
 const inputBtns = document.querySelectorAll('button'); /* it will return an array of all of our buttons */
-const clearBtn = document.getElementById('equal-sign-btn');
+const clearButton = document.getElementById('clear-btn');
+
+/* saving the numbers and operators */
+let firstValue = 0 ;
+let operatorValue = '';
+let awaitingNextValue = false;
 
 /* creating a function that passes a parameter to our event listener */
 function sendNumber(number) {
-    //console.log(number);
-    //calculatorDisplay.textContent=number
-    //if current display = 0 we are going to replace if not we are going to add it
-    const displayValue = calculatorDisplay.textContent;
-    calculatorDisplay.textContent = displayValue === '0' ? number : displayValue + number;// first we are setting the textcontent to be equal to the display value and checking through iternary operator if the display value is qual to zero we set it equal to the number passed else we will add  it 
+    //we need to create a condition that will reset the display if we are awaiting the next value or else we will update the display to accept more than one single digit numbers 
+    if (awaitingNextValue){
+        calculatorDisplay.textContent = number;
+        awaitingNextValue = false;
+    }else{
+        //calculatorDisplay.textContent=number
+        const displayValue = calculatorDisplay.textContent;
+        calculatorDisplay.textContent = displayValue === '0' ? number : displayValue + number;// first we are setting the textcontent to be equal to the display value and checking through iternary operator if the display value is qual to zero we set it equal to the number passed else we will add  it 
+    }
 }
-    //console.log(inputBtns);
-    // adding event listeners for number, operators and decimal button
-    // we have an array and we are going to use a for each to loop through that array
 
-    inputBtns.forEach((inputBtn) => {
-        if (inputBtn.classList.length === 0) {
-            inputBtn.addEventListener('click', () => sendNumber(inputBtn.value));
-        } else if (inputBtn.classList.contains('operators')) {
-            inputBtn.addEventListener('click', () => sendNumber(inputBtn.value))
-        } else if (inputBtn.classList.contains('decimal')) {
-            inputBtn.addEventListener('click', () => sendNumber(inputBtn.value))
-        }
-    })
+/* Making sure only one decimal is added */
+function addDecimal(){
+    // we will check the h1 and if it has no decimal we can add one if it contains then we cannot add
+    if(!calculatorDisplay.textContent.includes('.')){
+        calculatorDisplay.textContent = `${calculatorDisplay.textContent}.`
+    }
+
+}
+
+//creating operator function
+function useOperator(operator){
+    // ^ Converting string from h1 into number to be used in calcs
+    const currentValue = Number(calculatorDisplay.textContent);
+    //checking if first value already exists or not
+    if (!firstValue){
+        firstValue = currentValue ;
+    }else{ // if we have a first value , we want to add functionality to store the next value
+        console.log('Current Value' , currentValue)
+    }
+    // ready for the next value, store our operator
+    awaitingNextValue = true;
+    operatorValue = operator
+}
+
+
+
+// adding the Clear Button Functionality , plus resetting the first value and operator
+function resetCalc() {
+    calculatorDisplay.textContent = '0'
+    firstValue = 0 ;
+    operatorValue = '';
+    awaitingNextValue = false;
+}
+clearButton.addEventListener("click", ()=> resetCalc())
+
+
+// adding event listeners for number, operators and decimal button
+// we have an array and we are going to use a for each to loop through that array
+
+inputBtns.forEach((inputBtn) => {
+    if (inputBtn.classList.length === 0) {
+        inputBtn.addEventListener('click', () => sendNumber(inputBtn.value));
+    } else if (inputBtn.classList.contains('operators')) {
+        inputBtn.addEventListener('click', () => useOperator(inputBtn.value))
+    } else if (inputBtn.classList.contains('decimal')) {
+        inputBtn.addEventListener('click', () => addDecimal())
+    }
+})
+
