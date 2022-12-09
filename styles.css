@@ -75,6 +75,11 @@ button:active {
     color: white;
     font-size: 30px;
 }
+.back {
+    background-color:  rgb(127, 220, 220);
+    color: white;
+    font-size: 30px;
+}
 
 .clear:hover {
     filter: brightness(90%);
@@ -82,8 +87,8 @@ button:active {
 
 .equal-sign {
     grid-column: -2;
-    grid-row: 2 /span 4;
-    background-color: rgb(51, 248, 153);
+    grid-row: 2 /span 3;
+    background-color: rgb(120, 230, 177);
 }
 
 /* Media Query for Largert Smartphone */

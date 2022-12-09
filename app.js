@@ -79,7 +79,18 @@ function resetCalc() {
     operatorValue = '';
     awaitingNextValue = false;
 }
-clearButton.addEventListener("click", () => resetCalc())
+
+function backspace(){
+    const displayValue = calculatorDisplay.textContent;
+    const lengthOfDislayValue = displayValue.length;
+
+    if (!awaitingNextValue){
+        calculatorDisplay.textContent= displayValue.slice(0,lengthOfDislayValue-1 );
+    }else{
+        return;
+    }
+}
+
 
 
 // adding event listeners for number, operators and decimal button
@@ -92,6 +103,10 @@ inputBtns.forEach((inputBtn) => {
         inputBtn.addEventListener('click', () => useOperator(inputBtn.value))
     } else if (inputBtn.classList.contains('decimal')) {
         inputBtn.addEventListener('click', () => addDecimal())
+    } else if (inputBtn.classList.contains('back')) {
+        inputBtn.addEventListener('click', () => backspace())
+    } else if (inputBtn.classList.contains('clear')) {
+        clearButton.addEventListener("click", () => resetCalc())
     }
 })
 
