@@ -34,7 +34,7 @@ function addDecimal() {
 
 // calculate first and second value depending on value
 const calculate = {
-    '/': (firstNumer, secondNumber) => parseFloat(firstNumer / secondNumber).toFixed(3),
+    '/': (firstNumer, secondNumber) => parseFloat(firstNumer / secondNumber).toFixed(4),
     '*': (firstNumer, secondNumber) => firstNumer * secondNumber,
     '+': (firstNumer, secondNumber) => firstNumer + secondNumber,
     '-': (firstNumer, secondNumber) => firstNumer - secondNumber,
