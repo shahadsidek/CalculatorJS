@@ -34,7 +34,7 @@ function addDecimal() {
 
 // calculate first and second value depending on value
 const calculate = {
-    '/': (firstNumer, secondNumber) => firstNumer / secondNumber,
+    '/': (firstNumer, secondNumber) => parseFloat(firstNumer / secondNumber).toFixed(3),
     '*': (firstNumer, secondNumber) => firstNumer * secondNumber,
     '+': (firstNumer, secondNumber) => firstNumer + secondNumber,
     '-': (firstNumer, secondNumber) => firstNumer - secondNumber,
@@ -80,13 +80,13 @@ function resetCalc() {
     awaitingNextValue = false;
 }
 
-function backspace(){
+function backspace() {
     const displayValue = calculatorDisplay.textContent;
     const lengthOfDislayValue = displayValue.length;
 
-    if (!awaitingNextValue){
-        calculatorDisplay.textContent= displayValue.slice(0,lengthOfDislayValue-1 );
-    }else{
+    if (!awaitingNextValue) {
+        calculatorDisplay.textContent = displayValue.slice(0, lengthOfDislayValue - 1);
+    } else {
         return;
     }
 }
